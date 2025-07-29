@@ -3,6 +3,8 @@ import { Home, Search, BookMarked, BookOpen, Menu, X, Sun, Moon } from "lucide-r
 import { useState, useEffect } from 'react';
 import { IoLibraryOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 export default function Navbar({ isDarkMode, toggleTheme }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,10 +23,21 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  //if user's token has expired , and they visit another page , they will get logged out
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if(!token) return ;
+
+    if(!isTokenValid(token)){
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      sessionStorage.setItem("showSessionExpiredToast", "true");
+      navigate('/');
+    }
     setIsLoggedIn(!!token); // true if token exists
   }, [location]);
+
+  //say user forgets to logout before leaving site, thus their expired token will still be in localStorage, thus above code helps to auto-logout user when user revisits site, component gets re-rendered and hence below useEffect gets triggered. 
 
   const toggleMobileMenu = () => setIsMobileMenuOpen((open) => !open);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -35,6 +48,16 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
     sessionStorage.setItem("showLogoutToast", "true");
     navigate('/');
   };
+  
+  const isTokenValid = (token) => {
+    try{
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000; //in seconds
+      return decoded.exp > currentTime;
+    }catch(error){
+      return false;
+    }
+  }
 
   return (
     <>
