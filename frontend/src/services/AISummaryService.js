@@ -50,8 +50,6 @@ class AISummaryService {
   }
 
   async processBookWithAI(bookInfo) {
-    const { title, authors, description, categories, pageCount, averageRating, publishedDate } = bookInfo;
-
     // Create a comprehensive prompt for the AI
     const prompt = this.createPrompt(bookInfo);
 
@@ -154,14 +152,14 @@ class AISummaryService {
   }
 
   generateFallbackSummary(bookInfo) {
-    const { title, categories, pageCount, averageRating } = bookInfo;
+    const { categories, averageRating } = bookInfo;
 
     return {
       summary: this.generateGenericSummary(bookInfo),
       keyThemes: this.extractThemes(categories),
       pros: this.getDefaultPros(bookInfo),
       cons: this.getDefaultCons(bookInfo),
-      recommendation: this.assessRecommendation(averageRating, pageCount),
+      recommendation: this.assessRecommendation(averageRating),
       confidence: "Medium",
       targetAudience: this.generateTargetAudience(bookInfo)
     };
@@ -228,7 +226,7 @@ class AISummaryService {
     return cons.slice(0, 2);
   }
 
-  assessRecommendation(averageRating, pageCount) {
+  assessRecommendation(averageRating) {
     if (averageRating) {
       if (averageRating >= 4.5) return "Highly Recommended";
       if (averageRating >= 4.0) return "Recommended";
@@ -240,7 +238,7 @@ class AISummaryService {
   }
 
   generateTargetAudience(bookInfo) {
-    const { categories, pageCount } = bookInfo;
+    const { categories } = bookInfo;
 
     if (categories && categories.length > 0) {
       const category = categories[0].toLowerCase();
