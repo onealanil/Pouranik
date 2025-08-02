@@ -19,6 +19,8 @@ export default function Explore() {
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const [searchType, setSearchType] = useState('books'); // 'books' or 'authors'
   const debounceTimerRef = useRef(null);
+  const resultsRef = useRef(null);
+
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1); // Changed to 1-based for UI
@@ -93,6 +95,9 @@ export default function Explore() {
       if (e && e.preventDefault) e.preventDefault();
       const searchQuery = searchTerm || query;
       if (!searchQuery.trim()) return;
+      if (resultsRef.current) {
+          resultsRef.current.scrollIntoView({ behavior: 'smooth' });
+}
 
       setLoading(true);
       setSearched(true);
@@ -111,6 +116,9 @@ export default function Explore() {
         setBooks(response.items || []);
         setTotalItems(response.totalItems || 0);
         setCurrentPage(page + 1); // Convert to 1-based for UI
+        if (resultsRef.current) {
+            resultsRef.current.scrollIntoView({ behavior: 'smooth' });
+         }
       } catch (error) {
         console.error("Failed to fetch books:", error);
         setBooks([]);
@@ -317,7 +325,7 @@ const popularSearches = searchType === 'books' ? popularBookSearches : famousAut
         </section>
 
         {/* Results Section */}
-        <section className="pb-16 results-section">
+        <section ref={resultsRef} className="pb-16 results-section">
           <div className="container-modern flex flex-col items-center">
             {/* Loading State */}
             {loading && (
