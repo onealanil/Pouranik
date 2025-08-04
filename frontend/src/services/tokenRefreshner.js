@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 
 const REFRESH_THRESHOLD = 5 * 60 * 1000; // 5 minutes
 
-function useTokenRefresher({ setIsLoggedIn }) {
+function useTokenRefresher() {
   const [refresh, setRefresh] = useState(0);
     
   useEffect(() => {

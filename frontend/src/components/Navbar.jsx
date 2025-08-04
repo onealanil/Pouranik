@@ -16,7 +16,7 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
 
-  const refresh = useTokenRefresher({ setIsLoggedIn });
+  const refresh = useTokenRefresher();
   // console.log(refresh);
 
   useEffect(() => {
@@ -77,6 +77,7 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
       const currentTime = Date.now() / 1000; //in seconds
       return decoded.exp > currentTime;
     } catch (error) {
+      console.log(error);
       return false;
     }
   }
