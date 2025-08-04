@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { IoLibraryOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import useTokenRefresher from '../services/tokenRefreshner';
 import { toast } from 'react-toastify';
 
 export default function Navbar({ isDarkMode, toggleTheme }) {
@@ -14,6 +15,9 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
+
+  const refresh = useTokenRefresher({ setIsLoggedIn });
+  // console.log(refresh);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,11 +53,13 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
     const timer = setTimeout(() => {
       localStorage.removeItem("token");
       setIsLoggedIn(false);
-      toast.error("Session expired. Please login again.");
+      // sessionStorage.setItem("showSessionExpiredToast", "true");
+      toast.error("Session expired. Please login again!")
+      navigate('/');
     }, timeout);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [refresh]);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen((open) => !open);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
