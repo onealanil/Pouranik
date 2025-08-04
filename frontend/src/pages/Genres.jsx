@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const genres = [
@@ -209,8 +208,8 @@ export default function Genres() {
       <section className="section-spacing-small">
         <div className="container-modern">
           <div className="grid-modern grid-3">
-            {genres.map((genre, index) => {
-              const delay = `${index * 0.1}s`;
+            {genres.map((genre) => {
+              // const delay = `${index * 0.1}s`;
 
               return (
                 <Link

@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
 
