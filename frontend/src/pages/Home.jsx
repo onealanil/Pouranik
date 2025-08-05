@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
@@ -8,6 +8,8 @@ import { GiInspiration } from "react-icons/gi";
 import { TbTargetArrow } from "react-icons/tb";
 
 export default function Home() {
+  const observerRef = useRef(null);
+
   useEffect(() => {
   if (sessionStorage.getItem("showLoginToast") === "true") {
     toast.success("Logged in successfully!", { autoClose: 3000 });
@@ -32,6 +34,34 @@ export default function Home() {
     sessionStorage.removeItem("showSessionExpiredToast");
   }
 }, []);
+
+  // Scroll reveal animation effect
+  useEffect(() => {
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-reveal');
+        }
+      });
+    };
+
+    observerRef.current = new IntersectionObserver(observerCallback, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observe all sections
+    const sections = document.querySelectorAll('.scroll-reveal');
+    sections.forEach((section) => {
+      observerRef.current.observe(section);
+    });
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
 
 // Inject Chatbase script
  useEffect(() => {
@@ -125,6 +155,39 @@ export default function Home() {
     };
   }, []);
 
+  // Add CSS for scroll reveal animations
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.6s ease-out;
+      }
+      
+      .scroll-reveal.animate-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .scroll-reveal.delay-200 {
+        transition-delay: 0.2s;
+      }
+      
+      .scroll-reveal.delay-400 {
+        transition-delay: 0.4s;
+      }
+      
+      .scroll-reveal.delay-600 {
+        transition-delay: 0.6s;
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -180,7 +243,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="section-padding">
+      <section className="section-padding scroll-reveal">
         <div className="container-lg">
           <div className="text-center mb-16">
             <h2
@@ -199,7 +262,7 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-12">
-            <div className="book-card animate-scale-in" data-tour="why-choose-pouranik-section">
+            <div className="book-card animate-scale-in scroll-reveal" data-tour="why-choose-pouranik-section">
               <div className="smart-search-icon"><IoSearch /></div>
               <h3
                 className="h3"
@@ -216,7 +279,7 @@ export default function Home() {
                 intelligent filters and recommendations.
               </p>
             </div>
-            <div className="book-card animate-scale-in delay-200">
+            <div className="book-card animate-scale-in  scroll-reveal delay-200">
               <div className="category-icon"><TbCategory /></div>
               <h3
                 className="h3"
@@ -233,7 +296,7 @@ export default function Home() {
                 curated collections.
               </p>
             </div>
-            <div className="book-card animate-scale-in delay-400">
+            <div className="book-card animate-scale-in  scroll-reveal delay-400">
               <div className="inspiration-icon"><GiInspiration /></div>
               <h3
                 className="h3"
@@ -255,7 +318,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="section-padding-sm">
+      <section className="section-padding-sm scroll-reveal delay-200">
         <div className="container-md">
           <div className="card-modern text-center" data-tour="powered-by-google-books-section">
             <h3
@@ -313,7 +376,7 @@ export default function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="section-padding">
+      <section className="section-padding scroll-reveal delay-400">
         <div className="container-md">
           <div
             className="card-modern text-center"

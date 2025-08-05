@@ -25,6 +25,7 @@ export default function Explore() {
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const [searchType, setSearchType] = useState('books'); // 'books' or 'authors'
   const debounceTimerRef = useRef(null);
+  const observerRef = useRef(null);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1); // Changed to 1-based for UI
@@ -42,6 +43,76 @@ export default function Explore() {
 
   // Calculate total pages
   const totalPages = Math.ceil(totalItems / maxResultsPerPage);
+
+  // Scroll reveal animation effect
+  useEffect(() => {
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-reveal');
+        }
+      });
+    };
+
+    observerRef.current = new IntersectionObserver(observerCallback, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observe all sections
+    const sections = document.querySelectorAll('.scroll-reveal');
+    sections.forEach((section) => {
+      observerRef.current.observe(section);
+    });
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+
+  // Add CSS for scroll reveal animations
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.6s ease-out;
+      }
+      
+      .scroll-reveal.animate-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .scroll-reveal.delay-200 {
+        transition-delay: 0.2s;
+      }
+      
+      .scroll-reveal.delay-400 {
+        transition-delay: 0.4s;
+      }
+      
+      .scroll-reveal.delay-600 {
+        transition-delay: 0.6s;
+      }
+      
+      .scroll-reveal.delay-800 {
+        transition-delay: 0.8s;
+      }
+      
+      .scroll-reveal.delay-1000 {
+        transition-delay: 1.0s;
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   // Save preferences whenever filter state changes
   useEffect(() => {
@@ -297,7 +368,7 @@ const popularSearches = searchType === 'books' ? popularBookSearches : famousAut
       </section>
 
       {/* Search Section */}
-      <section className={styles.searchSection}>
+      <section className={`${styles.searchSection} scroll-reveal`}>
         <div className={styles.searchContainer}>
           <div className="glass-effect-strong card-modern border-medium p-8">
             <form onSubmit={handleSearch} className={styles.searchForm}>
@@ -398,7 +469,7 @@ const popularSearches = searchType === 'books' ? popularBookSearches : famousAut
 
         {/* Sort and Filter Controls - only show after a search has been performed */}
         {searched && !loading && books.length > 0 && (
-          <section className="pb-6">
+          <section className="pb-6 scroll-reveal delay-200">
             <div className="container-modern">
               <SortAndFilterControls
                 sortBy={sortBy}
@@ -449,7 +520,7 @@ const popularSearches = searchType === 'books' ? popularBookSearches : famousAut
 
             {/* No Results */}
             {searched && !loading && books.length === 0 && (
-              <div className="text-center py-16">
+              <div className="text-center py-16 scroll-reveal">
                 <div className="glass-effect card-modern flex flex-col items-center md:flex-row max-w-5xl mx-auto border-subtle">
                   <div>
                     <NoBookFound />
@@ -500,7 +571,7 @@ const popularSearches = searchType === 'books' ? popularBookSearches : famousAut
             )}
 
             {books.length > 0 && (
-              <div className="w-full !my-16">
+              <div className="w-full !my-16 scroll-reveal delay-400">
                 <div className="text-left mb-12">
                   <h2
                     className="heading-secondary !mb-4"
@@ -550,30 +621,36 @@ const popularSearches = searchType === 'books' ? popularBookSearches : famousAut
                 </div>
 
                 <div className="grid-modern grid-3">
-                  {books.map((book, index) => (
-                    <div
-                      key={book.id || index}
-                      className="slide-in-animation"
-                      style={{ animationDelay: `${index * 0.05}s` }}
-                    >
-                      <BookCard book={book} onClick={() => handleCreateBookGenerally(book)} />
-                    </div>
-                  ))}
+                  {books.map((book, index) => {
+                    const delayClass = index < 3 ? '' : index < 6 ? 'delay-200' : index < 9 ? 'delay-400' : 'delay-600';
+                    
+                    return (
+                      <div
+                        key={book.id || index}
+                        className={`slide-in-animation scroll-reveal ${delayClass}`}
+                        style={{ animationDelay: `${index * 0.05}s` }}
+                      >
+                        <BookCard book={book} onClick={() => handleCreateBookGenerally(book)} />
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* Pagination */}
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                  loading={loading}
-                />
+                <div className="scroll-reveal delay-800">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                    loading={loading}
+                  />
+                </div>
               </div>
             )}
 
             {/* Welcome State */}
             {!searched && !loading && (
-              <div className={styles.welcomeSection}>
+              <div className={`${styles.welcomeSection} scroll-reveal delay-600`}>
                 <div className={`${styles.glassEffect} ${styles.welcomeCard}`}>
                   <div className={styles.welcomeIconContainer}>
                     <FaBookReader className={styles.welcomeIcon} />
@@ -593,7 +670,7 @@ const popularSearches = searchType === 'books' ? popularBookSearches : famousAut
                         { icon: <FaStar className={styles.featureIcon} />, label: "Rated & Reviewed" },
                         { icon: <FaLink className={styles.featureIcon} />, label: "Preview Links" },
                       ].map((feature, index) => (
-                        <div key={index} className={styles.featureItem}>
+                        <div key={index} className={`${styles.featureItem} scroll-reveal delay-${200 + (index * 200)}`}>
                           <div className={styles.featureIconContainer}>
                             {feature.icon}
                           </div>
