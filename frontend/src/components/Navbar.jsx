@@ -138,8 +138,8 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
                   onClick={closeMobileMenu}
                   data-tour={`mobile-navbar-link-${label.toLowerCase()}`}
                 >
-                  <span className="mobile-menu-icon !text-white">{icon}</span>
-                  <span className="mobile-menu-label !text-white">{label}</span>
+                  <span className="mobile-menu-icon ">{icon}</span>
+                  <span className="mobile-menu-label">{label}</span>
                 </Link>
               ))}
               {/* Dark Mode Toggle - Mobile */}
@@ -172,3 +172,4 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
     </>
   );
 }
+
