@@ -914,30 +914,6 @@ body {
     font-size: 14px;
 }
 
-/* Fix: Always show book cards in dark mode and after filtering */
-[data-theme="dark"] article.bg-white,
-[data-theme="dark"] .book-card,
-[data-theme="dark"] .book-card-hover {
-    background: var(--neutral-200) !important;
-    color: var(--text-primary) !important;
-    border-color: var(--border-color) !important;
-}
-[data-theme="dark"] .book-card *,
-[data-theme="dark"] .book-card-hover * {
-    color: var(--text-primary) !important;
-}
-
-/* Fix: BookCard info section text color for dark mode */
-[data-theme="dark"] .book-card-hover .bg-gray-100,
-[data-theme="dark"] .book-card-hover .bg-gray-700 {
-    background: #111 !important;
-    color: #fff !important;
-}
-[data-theme="dark"] .book-card-hover .bg-gray-100 *,
-[data-theme="dark"] .book-card-hover .bg-gray-700 * {
-    color: #fff !important;
-}
-
 /* Main Content Layout */
 .main-content {
     flex: 1;
@@ -1156,8 +1132,8 @@ body {
 /* Popular searches section with larger gap */
 .popular-searches-section {
     margin-top: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1 solid var(--border-color);
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
 }
 
 .search-button {
