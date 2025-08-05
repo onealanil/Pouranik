@@ -92,7 +92,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="!bg-white/50 !text-gray-600 pt-12 pb-6">
+<footer className="!bg-[#ccfbf1] !text-gray-600 pt-12 pb-6">
       <div className="max-w-6xl !mx-auto !px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 !mb-8">
           <div className="lg:col-span-2">
