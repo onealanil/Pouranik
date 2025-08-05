@@ -226,8 +226,8 @@ body {
 
     /* Theme toggle button text */
     [data-theme="dark"] .theme-toggle {
-        color: var(--text-primary) !important;
-        /* color: var(--text-primary, #374151); */
+        /* color: var(--text-primary) !important; */
+        color: var(--text-primary, #374151);
         font-weight: 600;
     }
 
@@ -1454,7 +1454,7 @@ body {
 }
 
 [data-theme="dark"] *:not(.preserve-white-text):not(.community-page *) {
-    color: inherit;
+    color: inherit !important;
 }
 
 /* Specific fixes for white text elements */
@@ -1523,7 +1523,7 @@ body {
 
 /* Icon backgrounds for maximum visibility */
 [data-theme="dark"] .navbar-link span:first-child {
-    /* background: var(--neutral-200); */
+    background: var(--neutral-200);
     border-radius: 8px;
     padding: 4px 6px;
     margin-right: 4px;
@@ -1604,11 +1604,11 @@ body {
 
 /* Complete footer dark mode overhaul */
 [data-theme="dark"] .footer-modern,
+[data-theme="dark"] footer,
 [data-theme="dark"] [class*="footer"] {
-    background: var(--neutral-800) !important;
+    /* background: var(--neutral-200) !important; */
     color: var(--text-secondary) !important;
 }
-
 
 /* Footer headers and titles */
 [data-theme="dark"] .footer-modern h1,
@@ -1626,12 +1626,12 @@ body {
 /* All footer text elements */
 [data-theme="dark"] .footer-modern *,
 [data-theme="dark"] footer * {
-    /* color: var(--text-secondary) !important; */
+    color: var(--text-secondary) !important;
 }
 
 /* Footer links */
 [data-theme="dark"] .footer-modern a,
-a {
+[data-theme="dark"] footer a {
     color: var(--text-secondary) !important;
 }
 
@@ -1740,15 +1740,11 @@ a {
 
 /* Enhanced footer text brightness in dark mode */
 [data-theme="dark"] .footer-modern,
+[data-theme="dark"] footer,
 [data-theme="dark"] [class*="footer"] {
-    background: var(--neutral-200) !important;
-    color: var(--text-primary) !important;
-    /* Changed from text-secondary to text-primary */
-}
-
-[data-theme="dark"] footer {
     /* background: var(--neutral-200) !important; */
     color: var(--text-primary) !important;
+    /* Changed from text-secondary to text-primary */
 }
 
 /* Footer headers and titles - even brighter */
@@ -1766,14 +1762,10 @@ a {
 }
 
 /* All footer text elements - brighter */
-[data-theme="dark"] .footer-modern * {
+[data-theme="dark"] .footer-modern *,
+[data-theme="dark"] footer * {
     color: var(--text-primary) !important;
     /* Changed from text-secondary */
-}
-
-[data-theme="dark"] footer * {
-    /* color: var(--text-primary) !important; */
-
 }
 
 /* Footer links - bright and readable */
@@ -1995,7 +1987,6 @@ a {
 .mobile-menu-label {
     font-size: 16px;
     font-weight: 500;
-    /* color: white; */
 }
 
 .mobile-theme-toggle {
