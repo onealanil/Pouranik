@@ -48,32 +48,29 @@ export default function Explore() {
 
   // Scroll reveal animation effect
   useEffect(() => {
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-reveal');
-        }
-      });
-    };
-
-    observerRef.current = new IntersectionObserver(observerCallback, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
-    // Observe all sections
-    const sections = document.querySelectorAll('.scroll-reveal');
-    sections.forEach((section) => {
-      observerRef.current.observe(section);
-    });
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
+  const observerCallback = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-reveal');
       }
-    };
-  }, []);
+    });
+  };
 
+  const observer = new IntersectionObserver(observerCallback, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  // Observe all sections
+  const sections = document.querySelectorAll('.scroll-reveal');
+  sections.forEach((section) => {
+    observer.observe(section);
+  });
+
+  return () => {
+    observer.disconnect();
+  };
+}, []);
   // Add CSS for scroll reveal animations
   useEffect(() => {
     const style = document.createElement('style');
