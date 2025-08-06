@@ -25,8 +25,10 @@ export default function Explore() {
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const [searchType, setSearchType] = useState('books'); // 'books' or 'authors'
   const debounceTimerRef = useRef(null);
-  const observerRef = useRef(null);
+  const resultsRef = useRef(null);
 
+
+ 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1); // Changed to 1-based for UI
   const [totalItems, setTotalItems] = useState(0);
@@ -47,31 +49,29 @@ export default function Explore() {
 
   // Scroll reveal animation effect
   useEffect(() => {
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-reveal');
-        }
-      });
-    };
-
-    observerRef.current = new IntersectionObserver(observerCallback, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
-    // Observe all sections
-    const sections = document.querySelectorAll('.scroll-reveal');
-    sections.forEach((section) => {
-      observerRef.current.observe(section);
-    });
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
+  const observerCallback = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-reveal');
       }
-    };
-  }, []);
+    });
+  };
+
+  const observer = new IntersectionObserver(observerCallback, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  // Observe all sections
+  const sections = document.querySelectorAll('.scroll-reveal');
+  sections.forEach((section) => {
+    observer.observe(section);
+  });
+
+  return () => {
+    observer.disconnect();
+  };
+}, []);
 
   // Ensure scroll-reveal animation is triggered after books update (fix invisible cards)
   useEffect(() => {
@@ -83,7 +83,6 @@ export default function Explore() {
       elements.forEach((el) => el.classList.add('animate-reveal'));
     }, 10);
   }, [books]);
-
   // Add CSS for scroll reveal animations
   useEffect(() => {
     const style = document.createElement('style');
@@ -204,6 +203,9 @@ export default function Explore() {
       if (e && e.preventDefault) e.preventDefault();
       const searchQuery = searchTerm || query;
       if (!searchQuery.trim()) return;
+      if (resultsRef.current) {
+          resultsRef.current.scrollIntoView({ behavior: 'smooth' });
+}
 
       setLoading(true);
       setSearched(true);
@@ -234,6 +236,9 @@ export default function Explore() {
         setBooks(response.items || []);
         setTotalItems(response.totalItems || 0);
         setCurrentPage(page + 1); // Convert to 1-based for UI
+        if (resultsRef.current) {
+            resultsRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
       // eslint-disable-next-line no-unused-vars
       } catch (error) {
         // console.error("Failed to fetch books:", error);
@@ -500,7 +505,7 @@ const popularSearches = searchType === 'books' ? popularBookSearches : famousAut
         )}
 
         {/* Results Section */}
-        <section className="pb-16 results-section">
+        <section ref={resultsRef} className="pb-16 results-section">
           <div className="container-modern flex flex-col items-center">
             {/* Loading State */}
             {loading && (
