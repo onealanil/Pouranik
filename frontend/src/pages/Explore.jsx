@@ -46,6 +46,7 @@ export default function Explore() {
   // Calculate total pages
   const totalPages = Math.ceil(totalItems / maxResultsPerPage);
 
+
   // Scroll reveal animation effect
   useEffect(() => {
   const observerCallback = (entries) => {
@@ -71,6 +72,17 @@ export default function Explore() {
     observer.disconnect();
   };
 }, []);
+
+  // Ensure scroll-reveal animation is triggered after books update (fix invisible cards)
+  useEffect(() => {
+    // Remove animate-reveal from all .scroll-reveal elements
+    const elements = document.querySelectorAll('.scroll-reveal');
+    elements.forEach((el) => el.classList.remove('animate-reveal'));
+    // Force reflow and re-add animate-reveal to trigger animation
+    setTimeout(() => {
+      elements.forEach((el) => el.classList.add('animate-reveal'));
+    }, 10);
+  }, [books]);
   // Add CSS for scroll reveal animations
   useEffect(() => {
     const style = document.createElement('style');
