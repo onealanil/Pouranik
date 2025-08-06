@@ -3,6 +3,9 @@ import { Home, Search, BookMarked, BookOpen, Menu, X, Sun, Moon, Users } from "l
 import { useState, useEffect } from 'react';
 import { IoLibraryOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import useTokenRefresher from '../services/tokenRefreshner';
+import { toast } from 'react-toastify';
 
 export default function Navbar({ isDarkMode, toggleTheme }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,6 +16,9 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
 
+  const refresh = useTokenRefresher();
+  // console.log(refresh);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -21,10 +27,39 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  //if user's token has expired , and they visit another page , they will get logged out
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (!token) return;
+
+    if (!isTokenValid(token)) {
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      sessionStorage.setItem("showSessionExpiredToast", "true");
+      navigate('/');
+    }
     setIsLoggedIn(!!token); // true if token exists
   }, [location]);
+  //say user forgets to logout before leaving site, thus their expired token will still be in localStorage, thus above code helps to auto-logout user when user revisits site, component gets re-rendered and hence below useEffect gets triggered. 
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const decoded = jwtDecode(token);
+    const expiryTime = decoded.exp * 1000;
+    const timeout = expiryTime - Date.now();
+
+    const timer = setTimeout(() => {
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      // sessionStorage.setItem("showSessionExpiredToast", "true");
+      toast.error("Session expired. Please login again!")
+      navigate('/');
+    }, timeout);
+
+    return () => clearTimeout(timer);
+  }, [refresh]);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen((open) => !open);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -35,6 +70,17 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
     sessionStorage.setItem("showLogoutToast", "true");
     navigate('/');
   };
+
+  const isTokenValid = (token) => {
+    try {
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000; //in seconds
+      return decoded.exp > currentTime;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 
   return (
     <>
@@ -84,8 +130,8 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
                 key={path}
                 to={path}
                 className={`navbar-link flex items-center gap-2 px-2.5 py-2 rounded-md transition-all duration-500 ease-in-out ${isActive(path)
-                  ? "bg-[#0f766e] text-white"
-                  : "hover:underline hover:text-[#0f766e]"
+                    ? "bg-[#0f766e] text-white"
+                    : "hover:underline hover:text-[#0f766e]"
                   }`}
                 data-tour={`navbar-link-${label.toLowerCase()}`}
               >
