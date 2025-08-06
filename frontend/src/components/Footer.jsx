@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+const Footer = ({ isDarkMode }) => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
@@ -91,10 +91,20 @@ const Footer = () => {
     },
   ];
 
+
   return (
-<footer className="!bg-[#ccfbf1] !text-gray-600 pt-12 pb-6">
-      <div className="max-w-6xl !mx-auto !px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 !mb-8">
+    <footer
+      className="pt-12 pb-6 !text-white"
+      style={{
+        background: isDarkMode
+          ? "var(--neutral-50)"
+          : "var(--primary-100)",
+      }}
+    >
+
+      {/* <div className="max-w-6xl !mx:auto > */}
+      < div className="max-w-6xl !mx-auto px-15 !lg:px-10" >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 !mb-4">
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-bold !bg-emerald-800 bg-clip-text text-transparent">
               Pouranik
@@ -119,7 +129,7 @@ const Footer = () => {
 
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h3 className="!text-gray-800 font-semibold !mb-4">
+              <h3 className="!text-gray-400 font-semibold !mb-4">
                 {section.title}
               </h3>
               <ul className="space-y-3">
@@ -139,20 +149,18 @@ const Footer = () => {
           ))}
         </div>
 
-        <div className="border-t border-gray-200 !mt-8 !pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-center md:text-left text-sm !text-gray-500">
-              <p>© {currentYear} Pouranik. All rights reserved.</p>
-            </div>
-            <div className="flex items-center text-sm !text-gray-500">
-              <span>Build with</span>
-              <Heart className="w-4 h-4 !mx-1 text-red-500" />
-              <span>for book lovers everywhere</span>
-            </div>
+        <div className="mt-8 pt-8">
+          <div className="flex flex-wrap items-center justify-center text-sm text-gray-500 space-x-5 text-center">
+            <span>© {currentYear} Pouranik. All rights reserved. Built with &nbsp;</span>
+            <Heart className="w-4 h-4 mx-1 text-red-500" />
+            <span>&nbsp; for book lovers everywhere.</span>
           </div>
         </div>
-      </div>
-    </footer>
+
+
+
+      </div >
+    </footer >
   );
 };
 
