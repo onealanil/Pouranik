@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react"
+import { useState } from "react"
 import AuthForm from "../components/AuthForm";
 
 const SignIn = ({ isDarkMode }) => {  // Add isDarkMode prop
