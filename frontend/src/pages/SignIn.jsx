@@ -17,7 +17,7 @@ const SignIn = ({ isDarkMode }) => {  // Add isDarkMode prop
       <section className='flex justify-center items-center !w-full lg:flex !mt-5'>
         <div className="w-full">
           {formType === 'signin' ? (
-            <section className='flex flex-col !space-y-7 w-full rounded-2xl justify-center items-center'>
+            <section className='flex flex-col !space-y-7 w-full rounded-2xl justify-center items-center py-17'>
               <AuthForm formType={formType} isDarkMode={isDarkMode} />
               <p className={isDarkMode ? 'text-white' : 'text-gray-800'}>
                 Don't have an account ? 
