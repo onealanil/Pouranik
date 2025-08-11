@@ -55,7 +55,7 @@ const AuthForm = ({ formType, isDarkMode }) => {
     const inputClasses = `w-full px-6 py-2 rounded-lg text-lg transition-all duration-300 ${
         isDarkMode 
         ? 'bg-gray-800 text-white border-2 border-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500'
-        : 'bg-white text-gray-900 border-2 border-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-teal-500 focus:border-teal-500'
+        : 'bg-white !text-gray-900 border-2 border-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-teal-500 focus:border-teal-500'
     }`;
 
     const labelClasses = `text-lg mb-3 font-semibold ${
