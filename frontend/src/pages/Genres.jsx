@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import './Genres.css';
 
 const genres = [
   {
@@ -209,8 +210,9 @@ export default function Genres() {
   return (
     <div className="min-h-screen asd">
       {/* Header Section */}
-      <section className="page-hero section-spacing-small">
-        <div className="container-modern flex flex-col justify-center items-center text-center">
+      <section className="page-hero section-spacing-small ">
+        <div className="container-modern flex flex-col justify-center items-center text-center ">
+          
           <h1
             className="heading-primary mb-6 floating-animation"
             style={{ color: "var(--primary-700)" }}
@@ -277,7 +279,7 @@ export default function Genres() {
       </section>
 
       {/* Genres Grid */}
-      <section className="section-spacing-small scroll-reveal">
+<section className="section-spacing-small scroll-reveal fancy-divider">
         <div className="container-modern">
           <div className="grid-modern grid-3">
             {genres.map((genre, index) => {
@@ -343,7 +345,7 @@ export default function Genres() {
       </section>
 
       {/* Call to Action */}
-      <section className="p-[80px] flex justify-center items-center scroll-reveal delay-200">
+      <section className="p-[80px] flex justify-center items-center scroll-reveal delay-200 fancy-divider">
         <div className="flex flex-col justify-center max-w-2xl text-center">
           <div className="glass-effect-strong card-modern flex flex-col gap-y-2 border-gradient">
             <div className="text-5xl mb-6 floating-animation">🔍</div>
@@ -381,7 +383,7 @@ export default function Genres() {
       </section>
 
       {/* Popular Combinations */}
-      <section className="!py-16 scroll-reveal delay-400">
+      <section className="!py-16 scroll-reveal delay-400 fancy-divider">
         <div className="container-modern">
           <div className="text-center mb-12">
             <h3 className="heading-tertiary text-gray-500 font-semibold text-2xl !mb-12">
