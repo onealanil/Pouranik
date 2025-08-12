@@ -32,7 +32,7 @@ We chose this name because stories, whether from ancient scriptures or modern fi
 - **Reading Goals & Timer Tracker** – Stay on track with your habits
 - **User Profiles & Shelves** – Organize books as To-Read, Currently Reading, or Finished
 - **Language & Accessibility Support** – For a global community
-**Coming Soon** **– Real-time group messaging, event planning for clubs, and more**
+- **Coming Soon** **– Real-time group messaging, event planning for clubs, and more**
 
 Want to help bring these features to life? **Scroll to the contributions section!**
 
