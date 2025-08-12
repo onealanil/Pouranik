@@ -85,7 +85,7 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
   return (
     <>
       <nav
-        className={`navbar-modern fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out ${scrolled ? "bg-white shadow-md" : "bg-transparent"
+        className={`navbar-modern h-20 fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out ${scrolled ? "bg-white shadow-md" : "bg-transparent"
           }`}
       >
         <div className="navbar-container px-4 py-2 flex items-center justify-between">
@@ -99,10 +99,10 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
               <BookOpen size={42} className="text-[#0f766e]" />
             </div>
             <div>
-              <h2 className="text-[2.5rem] font-bold" style={{ color: "var(--primary-700)" }}>
+              <h2 className="text-[2rem] font-bold" style={{ color: "var(--primary-700)" }}>
                 Pouranik
               </h2>
-              <p className="text-sm" style={{ color: "var(--text-muted)", marginTop: "-2px" }}>
+              <p className="text-sm fs-3" style={{ color: "var(--text-muted)", marginTop: "-2px" }}>
                 Book Discovery
               </p>
             </div>

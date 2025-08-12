@@ -70,7 +70,7 @@ const AuthForm = ({ formType, isDarkMode }) => {
 
     return (
         <div className='login-container flex items-center justify-center w-full min-h-[60vh]'>
-            <div className={`w-100 max-w-2xl mx-auto login-card rounded-2xl shadow-2xl p-8 ${
+            <div className={`w-100  max-w-2xl mx-auto login-card rounded-2xl shadow-2xl p-8 ${
                 isDarkMode 
                 ? 'border border-gray-700 bg-gray-800/40'
                 : 'border border-gray-200 bg-white/40'
@@ -131,8 +131,7 @@ const AuthForm = ({ formType, isDarkMode }) => {
                         </div>
                         <button
                             type="submit"
-                            className={buttonClasses}
-                        >
+                            className={buttonClasses} style={{color:"black"}}>
                             Sign Up
                         </button>
                     </form>
@@ -172,8 +171,7 @@ const AuthForm = ({ formType, isDarkMode }) => {
                         </div>
                         <button
                             type="submit"
-                            className={buttonClasses}
-                        >
+                            className={buttonClasses} style={{color:"black"}}>
                             Login
                         </button>
                     </form>
