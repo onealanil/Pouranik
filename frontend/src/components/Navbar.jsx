@@ -3,6 +3,7 @@ import { Home, Search, BookMarked, BookOpen, Menu, X, Sun, Moon } from "lucide-r
 import { useState, useEffect } from 'react';
 import { IoLibraryOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import { Timer } from "lucide-react";
 
 export default function Navbar({ isDarkMode, toggleTheme }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -78,6 +79,7 @@ export default function Navbar({ isDarkMode, toggleTheme }) {
               { path: "/", label: "Home", icon: <Home size={18} /> },
               { path: "/explore", label: "Explore", icon: <Search size={18} /> },
               { path: "/genres", label: "Genres", icon: <BookMarked size={18} /> },
+              { path: "/timerpage", label: "Timer", icon: <Timer size={18} /> },
               ...(isLoggedIn ? [{ path: "/library", label: "Your Library", icon: <IoLibraryOutline size={18} /> }] : []),
             ].map(({ path, label, icon }) => (
               <Link
