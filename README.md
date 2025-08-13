@@ -28,7 +28,6 @@ We chose this name because stories, whether from ancient scriptures or modern fi
 - **Book Detail Pages** – Summaries, ratings, and user reviews
 - **Community Reviews** – Share and read opinions from other readers
 - **Book Clubs & Groups** – Build your own reading circles
-- **Buy & Sell Second-hand Books** – Promote sustainability
 - **Reading Goals & Timer Tracker** – Stay on track with your habits
 - **User Profiles & Shelves** – Organize books as To-Read, Currently Reading, or Finished
 - **Language & Accessibility Support** – For a global community
