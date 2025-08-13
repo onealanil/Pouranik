@@ -7,10 +7,12 @@ import AboutUs from '../pages/about';
 import Library from '../pages/Library';
 import SignIn from '../pages/SignIn';
 import Reviews from '../pages/Reviews';
+import Community from '../pages/Community';
+import ClubPage from '../pages/ClubPage';
 import TimerPage from '../pages/TimerPage';
 import AnalyticsPage from '../pages/AnalyticsPage';
 
-export default function AppRoutes({ isDarkMode }) {
+export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -23,6 +25,8 @@ export default function AppRoutes({ isDarkMode }) {
       <Route path="/analytics" element={<AnalyticsPage />} />
       <Route path='/signup' element={<SignIn />} />
       <Route path='/book/:id/reviews' element={<Reviews />} />
+      <Route path='/community' element={<Community />} />
+      <Route path='/club' element={<ClubPage />} />
     </Routes>
   );
 }
