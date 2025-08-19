@@ -34,6 +34,13 @@ const Footer = ({ isDarkMode }) => {
       icon: Github,
       color: "!hover:text-gray-800",
     },
+    {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/bhakti-more-01a619208/",
+    icon: Linkedin, 
+    color: "!hover:text-blue-700",
+  },
+
   ];
 
   const footerLinks = [
@@ -165,3 +172,4 @@ const Footer = ({ isDarkMode }) => {
 };
 
 export default Footer;
+
