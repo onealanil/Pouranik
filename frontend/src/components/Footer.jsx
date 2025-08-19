@@ -133,17 +133,16 @@ const Footer = ({ isDarkMode }) => {
                 {section.title}
               </h3>
               <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      to={link.href}
-                      className="!text-gray-600 w-fit hover:!text-gray-900 transition-colors duration-200 flex items-center gap-2 group"
-                    >
-                      <link.icon className={`w-4 h-4 ${link.color}`} />
-                      <span>{link.name}</span>
-                    </Link>
-                  </li>
-                ))}
+              {section.links.map((link) => ( 
+                <li key={link.name}>
+                  <Link
+                    to={link.href}
+                    className=" text-black-200 dark:text-white hover:!text-emerald-600 no-underline w-fit transition-colors duration-200 flex items-center gap-2 group  ">
+                    <link.icon className={`w-4 h-4 ${link.color}`} />
+                    <span>{link.name}</span>
+                  </Link>
+                </li>
+              ))}
               </ul>
             </div>
           ))}
