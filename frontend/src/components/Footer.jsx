@@ -121,7 +121,7 @@ const Footer = ({ isDarkMode }) => {
                   rel="noopener noreferrer"
                   className={`!text-gray-500 transition-colors duration-200 ${social.color}`}
                 >
-                  <social.icon className="w-6 h-6" />
+                  <social.icon className="w-8 h-8" />
                 </a>
               ))}
             </div>
@@ -165,3 +165,4 @@ const Footer = ({ isDarkMode }) => {
 };
 
 export default Footer;
+
